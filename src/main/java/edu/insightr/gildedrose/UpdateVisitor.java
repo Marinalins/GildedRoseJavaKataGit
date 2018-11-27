@@ -10,6 +10,8 @@ public class UpdateVisitor implements IVisitor {
             backstagePasses.setQuality(backstagePasses.getQuality() + 3);
         } else if (backstagePasses.getSellIn() <= 10) {
             backstagePasses.setQuality(backstagePasses.getQuality() + 2);
+        } else{
+            backstagePasses.setQuality(backstagePasses.getQuality() + 1);
         }
         if (backstagePasses.getQuality() < 0) {
             backstagePasses.setQuality(0);
