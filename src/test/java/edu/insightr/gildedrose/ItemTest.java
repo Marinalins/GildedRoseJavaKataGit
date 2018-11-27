@@ -11,7 +11,7 @@ public class ItemTest {
 
     @Before
     public void setUp() throws Exception {
-        item = new Item("Sulfuras",2,80);
+        item = new Sulfuras("Sulfuras",2,80);
     }
 
     @After
