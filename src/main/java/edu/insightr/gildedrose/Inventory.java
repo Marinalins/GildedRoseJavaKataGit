@@ -12,12 +12,12 @@ public class Inventory {
     public Inventory() {
         super();
         items = new Item[]{
-                new Item("+5 Dexterity Vest", 10, 20),
-                new Item("Aged Brie", 2, 0),
-                new Item("Elixir of the Mongoose", 5, 7),
-                new Item("Sulfuras, Hand of Ragnaros", 0, 80),
-                new Item("Backstage passes to a TAFKAL80ETC concert", 15, 20),
-                new Item("Conjured Mana Cake", 3, 6)
+                new Vest("+5 Dexterity Vest", 10, 20),
+                new Brie("Aged Brie", 2, 0),
+                new Elixir("Elixir of the Mongoose", 5, 7),
+                new Sulfuras("Sulfuras, Hand of Ragnaros", 0, 80),
+                new BackstagePasses("Backstage passes to a TAFKAL80ETC concert", 15, 20),
+                new Conjured("Conjured Mana Cake", 3, 6)
         };
 
     }
@@ -30,7 +30,7 @@ public class Inventory {
         System.out.println("***************");
         System.out.println("\n");
     }
-
+/*
     public void updateQuality() {
         for (int i = 0; i < items.length; i++) {
             if (items[i].getName() != "Aged Brie"
@@ -82,11 +82,41 @@ public class Inventory {
                 }
             }
         }
+    }*/
+
+    private static void execute(Strategy strategy, Item item) {
+        strategy.UpdateQuality(item);
+    }
+
+    public void updateQuality()
+    {
+        Strategy[] algorithms = {new StrategyItemIncrease(), new StrategyItemDecrease(), new StrategySulfuras()};
+        for(int i = 0 ; i<items.length; i++)
+        {/*
+            if(items[i].getName().matches("(?i:.*Sulfuras.*)"))
+                execute(algorithms[2],items[i]);
+            if(items[i].getName().matches("(?i:.*Backstage passes.*)")  || items[i].getName().matches("(?i:.*Brie.*)"))
+                execute(algorithms[0],items[i]);
+            if(items[i].getName().matches("(?i:.*Conjured.*)")  || items[i].getName().matches("(?i:.*Elixir.*)") || items[i].getName().matches("(?i:.*Vest.*)"))
+                execute(algorithms[1],items[i]);*/
+            for (Strategy algorithm : algorithms) {
+                execute(algorithm, items[i]);
+            }
+        }
+    }
+
+    public void updateSellIn()
+    {
+        for(int i = 0; i<items.length; i++)
+        {
+            items[i].setSellIn(items[i].getSellIn() - 1);
+        }
     }
 
     public static void main(String[] args) {
         Inventory inventory = new Inventory();
         for (int i = 0; i < 10; i++) {
+            inventory.updateSellIn();
             inventory.updateQuality();
             inventory.printInventory();
         }
